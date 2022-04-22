@@ -121,7 +121,7 @@ function stop() {
   }
 }
 
-function print() {
-  const props = PropertiesService.getScriptProperties()
-  console.log(props.getProperty('items') || '')
-}
+// function print() {
+//   const props = PropertiesService.getScriptProperties()
+//   console.log(props.getProperty('items') || '')
+// }
