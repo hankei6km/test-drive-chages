@@ -1,0 +1,11 @@
+# ignore all files…
+**/**
+
+# except the extensions…
+!appsscript.json
+# and our transpiled code
+!src/*.ts
+
+# ignore even valid files if in…
+.git/**
+node_modules/**
