@@ -1,4 +1,4 @@
-function settings_() {
+function settings_(props: GoogleAppsScript.Properties.Properties) {
   return {
     // watch(channel 作成)用のリソース
     resource: {
@@ -12,11 +12,11 @@ function settings_() {
       // 今回は 31 分で設定
       expiration: `${new Date(Date.now() + 60 * 31 * 1000).getTime()}`,
       // 通知を受け取る URL
-      address: ''
+      address: props.getProperty('address') || ''
     },
     // 通知を書き込むスプレッドシート
-    sheetId: '',
-    sheetName: ''
+    sheetId: props.getProperty('sheet_id') || '',
+    sheetName: props.getProperty('sheet_name') || ''
   }
 }
 
@@ -27,8 +27,8 @@ function doPost(e: GoogleAppsScript.Events.DoPost) {
     if (lock.tryLock(10 * 1000)) {
       try {
         // 初期設定
-        const settings = settings_()
         const props = PropertiesService.getScriptProperties()
+        const settings = settings_(props)
 
         // 保存しておいた pege token を取得
         const pageToken = props.getProperty('page_token')
@@ -78,8 +78,8 @@ function doPost(e: GoogleAppsScript.Events.DoPost) {
 
 function reset() {
   // 初期設定
-  const settings = settings_()
   const props = PropertiesService.getScriptProperties()
+  const settings = settings_(props)
 
   // start page token をスクリプトプロパティへ保存
   const resToken = Drive.Changes?.getStartPageToken()
